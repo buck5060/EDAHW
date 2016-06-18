@@ -15,6 +15,7 @@ class line
 		int times;
 		int data;
 		int id;
+    int fault;
 		line();
 		~line();
 };
@@ -26,6 +27,7 @@ line::line()
 	times = 0; 	
 	data = -1;
 	id = -1;
+  fault = 0;
 }
 
 line::~line()
