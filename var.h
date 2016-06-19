@@ -15,7 +15,7 @@ class line
 		int times;
 		int data;
 		int id;
-    int fault;
+		int fault;
 		line();
 		~line();
 };
