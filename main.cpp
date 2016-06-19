@@ -34,9 +34,10 @@ int main(int argc, char *argv[])
 	fileReading();
  
 	faultReading();
-  
-  
-  
+ 
+ for(int i=0;i<23;i++)
+ cout<<fault[i].times<<" "<<fault[i].id<<" "<<fault[i].fault<<endl;
+ 
  
 	/* List for all gate infomation
 	cout << endl << "/Gate read---------" << endl;
