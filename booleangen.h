@@ -6,7 +6,7 @@ using namespace std;
 
 string int2str(int &);
 //void foo(line &)
-string find_booleanfunction(line &, line &fault);
+string find_booleanfunction(line &, line &fault, int);
 //line* input;
 //line* output;
 //line* trans; //intermediate line
@@ -17,17 +17,23 @@ string find_booleanfunction(line &, line &fault);
 //int dff_num = 0;
 //int gate_num = 0;
 
+string* input_list_502;
+int input_list_502_idx = 0;
+
+
 //Type of fault
 //1.Stack At ?
 //2.change gate type
 //3.invert the output
 
-string find_booleanfunction(line &output, line &fault)
+
+string find_booleanfunction(line &output, line &fault, int nofault)
 {
 	string sin1,sin2;
    	string sout;
 	int gate_type = -1;
  
+
 
 	bool endIn1;
 	bool endIn2;
@@ -54,39 +60,41 @@ string find_booleanfunction(line &output, line &fault)
    if(!endIn1)
    {	
    	cout << "next level of in1" << endl;
-	if(fault.fault == 1 && fault.id == output.from -> in1 -> id) //type 1 of fault (SA0)
-		sin1 = "0";
-	else if(fault.fault == 2 && fault.id == output.from -> in1 -> id) //type 1 of fault (SA1)
-		sin1 = "1";
-	else if(fault.fault == 3 && fault.id == output.from -> in1 -> id)
-		sin1 = "!" + find_booleanfunction(*(output.from->in1) , fault);
-	else
-   		sin1 = find_booleanfunction(*(output.from->in1) , fault);
+   	sin1 = find_booleanfunction(*(output.from->in1) , fault, nofault);
 	cout << "sin1: " << sin1 << endl;
    }
    else
    {
 	sin1 = int2str(output.from->in1->id);
+	if(nofault)
+	{
+		input_list_502[ input_list_502_idx ] = sin1;
+		if(input_list_502_idx < 10)
+			input_list_502_idx += 2;
+		cout << "the truth table no " << input_list_502_idx - 2 << " is " << input_list_502[ input_list_502_idx - 2] << endl;
+	}
    	cout << "End of in1 " << output.id << endl;
+
    }
 
    if(!endIn2)
    {
    	cout << "next level of in2" << endl;
-	if(fault.fault == 1 && fault.id == output.from -> in2 -> id) //type 1 of fault (SA0)
-		sin2 = "0";
-	else if(fault.fault == 2 && fault.id == output.from -> in2 -> id) //type 1 of fault (SA1)
-		sin2 = "1";
-	else if(fault.fault == 3 && fault.id == output.from -> in2 -> id)
-		sin2 = "!" + find_booleanfunction(*(output.from->in2) , fault);
-	else
-   		sin2 = find_booleanfunction(*output.from->in2 , fault);
+   	sin2 = find_booleanfunction(*output.from->in2 , fault, nofault);
 	cout << "sin2: " << sin2 << endl;
    }
    else
    {
 	sin2 = int2str(output.from->in2->id);
+	if(nofault)
+	{
+		input_list_502[ input_list_502_idx ] = sin2;
+		if(input_list_502_idx < 10)
+			input_list_502_idx += 2;
+		cout << "the truth table no " << input_list_502_idx - 2 << " is " << input_list_502[ input_list_502_idx - 2] << endl;
+	}
    	cout << "End of in2 " << output.id << endl;
+
    }
 
   switch(fault.fault)
@@ -102,6 +110,52 @@ string find_booleanfunction(line &output, line &fault)
 	default: gate_type = output.from->type;
   }
 
+//*** generate sout with string append ****
+
+if(gate_type == 3)
+{
+	sout += "!";
+}
+
+if (endIn1 == 0)
+{
+	sout = sout + "( " + sin1 + " )";  
+}
+else
+{
+	sout = sout + "input[" + sin1 + "]";
+}
+
+switch(gate_type) // and, or, xor  NOT INCLUDE buff, not
+{
+	case 1:
+		sout += " && ";
+		break;
+	case 2:
+		sout += " || ";
+		break;
+	case 4:
+		sout += " ^ ";
+		break;
+}
+
+if(gate_type != 3 && gate_type != 5) //when using not gate or buff will not have input2
+{
+	if (endIn2 == 0)
+	{
+		sout = sout + "( " + sin2 + " )";  
+	}
+	else
+	{
+		sout = sout + "input[" + sin2 + "]";
+	}
+}
+
+
+return sout;
+
+
+/*** generate sout with table ****
   if(endIn1==0&&endIn2==0)
   {
 	   switch(gate_type)
@@ -205,8 +259,7 @@ string find_booleanfunction(line &output, line &fault)
 	      return sout;
 	      break;
 	   }
-
-  }
+  }*/
 }
 
 string int2str(int& i)

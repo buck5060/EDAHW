@@ -13,22 +13,24 @@
 #include<fstream>
 #include<string>
 #include<iomanip>
-#include<sstream>
-
+#include<sstream> 
 using namespace std; 
 
-//fstream outputfile; 
+fstream inputfile, outputfile; 
 int iforLoop, tempforLoop; 
 int inputNum = 4; //input：有幾個變數 
 
 string assign; 
 string inputString[100]; //可改為動態陣列 
 //string notCutString = "( ( ( input[105] ) && ( input[103] ^ input[231] ) ) ^ input[211] ) ;"; //input：未切割的布林函式字串
-string truthtable[100] = { "0", "0", "0", "1" }; //input：變數的真值表，可改為動態陣列 
+//string truthtable[100] = { "105", "1", "100", "0", "101", "0", "228", "1", "229", "1" }; //input：變數的真值表，可改為動態陣列 
 
-string booleancalc ( string notCutString )
+string* truthtable;
+
+string booleancalc( string notCutString )
 { 
-	
+	truthtable = input_list_502;
+	cout << "The input of booleancalc : " << notCutString << endl;
 	//以下為字串分割 
 	stringstream ss( notCutString ); 
 	//getline( ss, assign, ' ' ); //將assign存入字串assign  
@@ -40,8 +42,23 @@ string booleancalc ( string notCutString )
 	//以下為帶入input值
 	tempforLoop = 0; 
 	for( iforLoop = 0; ; iforLoop++ ){
-		if( ( inputString[iforLoop] != "(" ) && ( inputString[iforLoop] != ")" ) && ( inputString[iforLoop] != "&&" ) && ( inputString[iforLoop] != "^" ) && ( inputString[iforLoop] != "||" ) && ( inputString[iforLoop] != ";" ) ){
-			inputString[iforLoop] = truthtable[tempforLoop]; 
+		if( ( inputString[iforLoop] != "(" ) && ( inputString[iforLoop] != ")" ) && ( inputString[iforLoop] != "&&" ) && ( inputString[iforLoop] != "^" ) && ( inputString[iforLoop] != "||" ) && ( inputString[iforLoop] != ";" ) )
+		{
+			//inputString[iforLoop] = truthtable[tempforLoop]; 
+			for(int i = 0; i < 9; i += 2) //getting value from user input
+			{
+				if(inputString[iforLoop].substr(6,3) == truthtable[i])
+				{
+					cout << inputString[iforLoop].substr(6,3) << " == " << truthtable[i] << endl;
+					cout << "Replace " << inputString[iforLoop] << " with " << truthtable[i + 1] << endl;
+					inputString[iforLoop] = truthtable[i + 1];
+					break;
+				}
+				else
+				{
+					cout << inputString[iforLoop].substr(6,3) << " != " << truthtable[i] << endl;
+				}
+			}
 			tempforLoop++; 
 			if( tempforLoop == inputNum ) break; 
 		}
@@ -76,7 +93,19 @@ string booleancalc ( string notCutString )
 					else inputString[iforLoop] = "0"; 
 				}
 				//else if
-				//else 
+				//else
+
+				if( iforLoop != 0 ) //for fault with NEG
+				{
+					if( inputString[iforLoop-1] == "!")
+					{
+						if( inputString[iforLoop] ==  "1")
+							inputString[iforLoop] = "0";
+						else
+							inputString[iforLoop] = "1";
+					}
+				}
+
 				
 				//將字串陣列前移
 				for( tempforLoop = iforLoop+1; ; tempforLoop++ ){
@@ -90,13 +119,12 @@ string booleancalc ( string notCutString )
 		else if( inputString[iforLoop] == ";" ) break; //字串陣列內已經沒有( ) 
 	}
 	//cout << inputString[0] << endl; 
-	//outputfile << inputString[0] << endl; 
-
+	return inputString[0];
 	
 	//輸出的答案存在字串inputString[0]中 
 	
 	//system("pause"); 
-	return inputString[0]; 
+	return 0; 
 }
 
 

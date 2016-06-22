@@ -8,6 +8,7 @@ int pin;
 int behavior;
 int fault_type(string);
 line* fault;
+line* null_fault;
 
 
  int faultReading()
@@ -34,6 +35,7 @@ line* fault;
  r_fault.seekg(0);       //回頭
  
  fault = new line[fault_num];//new一個動態陣列
+ null_fault = new line[1];
 
 int fault_idx=0;     
  while(fault_idx<fault_num)
