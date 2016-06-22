@@ -28,7 +28,7 @@ line::line()
 	times = 0; 	
 	data = -1;
 	id = -1;
-  fault = 0;
+	fault = -1;
 }
 
 line::~line()

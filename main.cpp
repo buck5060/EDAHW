@@ -35,7 +35,7 @@ int main(int argc, char *argv[])
 	//cout << fault[15].times << " " << fault[15].id << " " << fault[15].fault << endl;
 	
 	//cout << "ans: "<< find_booleanfunction( output[1] , fault[0] ) << endl << endl;
-	cout << "ans: "<< ("( " + find_booleanfunction( output[1] , null_fault[0], 1 ) + " )" + " ;") << endl << endl;
+	cout << "ans: "<< ("( " + find_booleanfunction( output[1] , fault[15], 1 ) + " )" + " ;") << endl << endl;
 	input_list_502_idx = 0;
 
 	//cout << find_trans_list(502) << endl;
@@ -57,8 +57,8 @@ int main(int argc, char *argv[])
 		cout << i << "\t" << input_list_502[i] << endl;
 	}
 
-	cout << booleancalc( ("( " + find_booleanfunction( output[1] , fault[0], 1 ) + " )" + " ;") ) << endl << endl;
-	//input_list_502_idx = 0;
+	cout << booleancalc( ("( " + find_booleanfunction( output[1] , fault[22], 0 ) +  " )" + " ;") ) << endl << endl;
+	input_list_502_idx = 0;
 	
 	//cout << booleancalc( (find_booleanfunction( output[1] , fault[16] )+" ;") ) << endl;
 	//cout << booleancalc(  ) << endl;

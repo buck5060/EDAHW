@@ -97,29 +97,45 @@ string find_booleanfunction(line &output, line &fault, int nofault)
 
    }
 
+if(output.id == fault.id)
+{
   switch(fault.fault)
   {
   	case 4 : gate_type = 1;	break;
-  	//case 5 : gate_type = ;	break;
+  	case 5 : gate_type = 1;	break;
   	case 6 : gate_type = 2;	break;
-  	//case 7 : gate_type = ;	break;
+  	case 7 : gate_type = 2;	break;
   	case 8 : gate_type = 4;	break;
-  	//case 9 : gate_type = ;	break;
+  	case 9 : gate_type = 4;	break;
   	case 10: gate_type = 3;	break;
   	case 11: gate_type = 5;	break;
 	default: gate_type = output.from->type;
   }
+ }
+ else
+ {
+ 	gate_type = output.from->type;
+ }
 
 //*** generate sout with string append ****
 
-if(gate_type == 3)
-{
-	sout += "!";
-}
+
 
 if (endIn1 == 0)
 {
-	sout = sout + "( " + sin1 + " )";  
+	if(fault.fault == 1 && fault.id == output.from -> in1 -> id) //SA0
+		sout = "0";
+	else if(fault.fault == 2 && fault.id == output.from -> in1 -> id) //SA1
+		sout = "1";
+	else
+	{
+		
+		if( gate_type == 3 ^ ( ( fault.fault == 3 || fault.fault == 5 || fault.fault == 7 || fault.fault == 9) && fault.id == output.from -> in1 -> id) ) //only when one of them is right, the fault is 3,5,7,9
+		{
+			sout += "!";
+		}
+		sout = sout + "( " + sin1 + " )";  
+	}
 }
 else
 {
@@ -143,7 +159,20 @@ if(gate_type != 3 && gate_type != 5) //when using not gate or buff will not have
 {
 	if (endIn2 == 0)
 	{
-		sout = sout + "( " + sin2 + " )";  
+		
+		if(fault.fault == 1 && fault.id == output.from -> in2 -> id) //SA0
+			sout = "0";
+		else if(fault.fault == 2 && fault.id == output.from -> in2 -> id) //SA1
+			sout = "1";
+		else
+		{
+			
+			if( gate_type == 3 ^ ( ( fault.fault == 3 || fault.fault == 5 || fault.fault == 7 || fault.fault == 9) && fault.id == output.from -> in2 -> id) ) //only when one of them is right
+			{
+				sout += "!";
+			}
+			sout = sout + "( " + sin2 + " )";  
+		}
 	}
 	else
 	{

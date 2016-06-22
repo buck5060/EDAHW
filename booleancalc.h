@@ -18,7 +18,7 @@ using namespace std;
 
 fstream inputfile, outputfile; 
 int iforLoop, tempforLoop; 
-int inputNum = 4; //input：有幾個變數 
+
 
 string assign; 
 string inputString[100]; //可改為動態陣列 
@@ -29,8 +29,16 @@ string* truthtable;
 
 string booleancalc( string notCutString )
 { 
+	int inputNum = 0; //input：有幾個變數 
 	truthtable = input_list_502;
 	cout << "The input of booleancalc : " << notCutString << endl;
+
+	for(int i = 0; i < notCutString.length(); i++)
+	{
+		if(notCutString.substr(i, 5) == "input")
+			inputNum += 1;
+	}
+
 	//以下為字串分割 
 	stringstream ss( notCutString ); 
 	//getline( ss, assign, ' ' ); //將assign存入字串assign  
@@ -42,8 +50,10 @@ string booleancalc( string notCutString )
 	//以下為帶入input值
 	tempforLoop = 0; 
 	for( iforLoop = 0; ; iforLoop++ ){
-		if( ( inputString[iforLoop] != "(" ) && ( inputString[iforLoop] != ")" ) && ( inputString[iforLoop] != "&&" ) && ( inputString[iforLoop] != "^" ) && ( inputString[iforLoop] != "||" ) && ( inputString[iforLoop] != ";" ) )
+		if( ( inputString[iforLoop].substr(0,5) == "input" ) )
 		{
+			cout << "tempforLoop : " << tempforLoop << endl;
+			cout << "inputNum : " << inputNum << endl;
 			//inputString[iforLoop] = truthtable[tempforLoop]; 
 			for(int i = 0; i < 9; i += 2) //getting value from user input
 			{
