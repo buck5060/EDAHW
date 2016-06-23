@@ -4,9 +4,10 @@
 #include <sstream>
 using namespace std;
 
-string int2str(int &);
+string int2str(int& );
 //void foo(line &)
 string find_booleanfunction(line &, line &fault, int);
+string intval2str(int i);
 //line* input;
 //line* output;
 //line* trans; //intermediate line
@@ -38,14 +39,14 @@ string find_booleanfunction(line &output, line &fault, int nofault)
 	bool endIn1;
 	bool endIn2;
 
-   	cout << "--------------" << endl;
-	cout << "now id: " << output.id << endl;
-	cout << "gate type: " << output.from << endl;
-	cout << "gate type: " << output.to << endl;
-	cout << "fault id: " << fault.id << endl;
-	cout << "in1 id: " << output.from->in1->id << endl; 
-	cout << "in2 id: " << output.from->in2->id << endl; 
-	cout << "--------------" << endl << endl;
+   	//cout << "--------------" << endl;
+	//cout << "now id: " << output.id << endl;
+	//cout << "gate type: " << output.from << endl;
+	//cout << "gate type: " << output.to << endl;
+	//cout << "fault id: " << fault.id << endl;
+	//cout << "in1 id: " << output.from->in1->id << endl; 
+	//cout << "in2 id: " << output.from->in2->id << endl; 
+	//cout << "--------------" << endl << endl;
 
 	if(output.from->in1->id/100!=1 && output.from->in1->id/100!=2 && output.from->in1!=nullptr)
 		endIn1 = 0;
@@ -59,9 +60,9 @@ string find_booleanfunction(line &output, line &fault, int nofault)
 
    if(!endIn1)
    {	
-   	cout << "next level of in1" << endl;
+   	//cout << "next level of in1" << endl;
    	sin1 = find_booleanfunction(*(output.from->in1) , fault, nofault);
-	cout << "sin1: " << sin1 << endl;
+	//cout << "sin1: " << sin1 << endl;
    }
    else
    {
@@ -71,17 +72,17 @@ string find_booleanfunction(line &output, line &fault, int nofault)
 		input_list_502[ input_list_502_idx ] = sin1;
 		if(input_list_502_idx < 10)
 			input_list_502_idx += 2;
-		cout << "the truth table no " << input_list_502_idx - 2 << " is " << input_list_502[ input_list_502_idx - 2] << endl;
+		//cout << "the truth table no " << input_list_502_idx - 2 << " is " << input_list_502[ input_list_502_idx - 2] << endl;
 	}
-   	cout << "End of in1 " << output.id << endl;
+   	//cout << "End of in1 " << output.id << endl;
 
    }
 
    if(!endIn2)
    {
-   	cout << "next level of in2" << endl;
+   	//cout << "next level of in2" << endl;
    	sin2 = find_booleanfunction(*output.from->in2 , fault, nofault);
-	cout << "sin2: " << sin2 << endl;
+	//cout << "sin2: " << sin2 << endl;
    }
    else
    {
@@ -91,9 +92,9 @@ string find_booleanfunction(line &output, line &fault, int nofault)
 		input_list_502[ input_list_502_idx ] = sin2;
 		if(input_list_502_idx < 10)
 			input_list_502_idx += 2;
-		cout << "the truth table no " << input_list_502_idx - 2 << " is " << input_list_502[ input_list_502_idx - 2] << endl;
+		//cout << "the truth table no " << input_list_502_idx - 2 << " is " << input_list_502[ input_list_502_idx - 2] << endl;
 	}
-   	cout << "End of in2 " << output.id << endl;
+   	//cout << "End of in2 " << output.id << endl;
 
    }
 
@@ -300,3 +301,15 @@ string int2str(int& i)
    
    return s;
 }
+
+
+string intval2str(int i)
+{
+  string s;
+  stringstream ss;
+  ss << i ;
+  ss >> s ;
+   
+   return s;
+}
+

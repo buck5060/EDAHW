@@ -15,7 +15,7 @@ int gate_num = 0;
 int trans_num = 0;
 
 //void fileReading(int *input_num, int *output_num, int *dff_num, int* gate_num)
-int fileReading()
+int fileReading(string netlist_filename)
 {
 	int temp = 0;
 	string::size_type sz;
@@ -28,8 +28,10 @@ int fileReading()
 	int gate_idx = 0;
 	int gate_i = 0; //index for object array "gate"
 	
-	
-	ifstream netlist ("crc.isc");
+	cout << netlist_filename << endl;
+
+	ifstream netlist (&netlist_filename[0]);
+	//ifstream netlist ("crc.isc");
 	if(!netlist)
 	{
 		cout << "load fail!";

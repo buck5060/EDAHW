@@ -11,13 +11,17 @@ line* fault;
 line* null_fault;
 
 
- int faultReading()
+ int faultReading( string fault_filename )
 {
  int temp=0;
  int i=0;
  string::size_type sz;
  string str_tmp;
- ifstream r_fault ("fault_description.txt");
+
+ cout << fault_filename << endl;
+
+ ifstream r_fault (&fault_filename[0]);
+ //ifstream r_fault ("fault_description.txt");
  if(!r_fault)
  {
   

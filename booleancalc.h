@@ -31,7 +31,7 @@ string booleancalc( string notCutString )
 { 
 	int inputNum = 0; //input：有幾個變數 
 	truthtable = input_list_502;
-	cout << "The input of booleancalc : " << notCutString << endl;
+	//cout << "The input of booleancalc : " << notCutString << endl;
 
 	for(int i = 0; i < notCutString.length(); i++)
 	{
@@ -52,21 +52,21 @@ string booleancalc( string notCutString )
 	for( iforLoop = 0; ; iforLoop++ ){
 		if( ( inputString[iforLoop].substr(0,5) == "input" ) )
 		{
-			cout << "tempforLoop : " << tempforLoop << endl;
-			cout << "inputNum : " << inputNum << endl;
+			//cout << "tempforLoop : " << tempforLoop << endl;
+			//cout << "inputNum : " << inputNum << endl;
 			//inputString[iforLoop] = truthtable[tempforLoop]; 
 			for(int i = 0; i < 9; i += 2) //getting value from user input
 			{
 				if(inputString[iforLoop].substr(6,3) == truthtable[i])
 				{
-					cout << inputString[iforLoop].substr(6,3) << " == " << truthtable[i] << endl;
-					cout << "Replace " << inputString[iforLoop] << " with " << truthtable[i + 1] << endl;
+					//cout << inputString[iforLoop].substr(6,3) << " == " << truthtable[i] << endl;
+					//cout << "Replace " << inputString[iforLoop] << " with " << truthtable[i + 1] << endl;
 					inputString[iforLoop] = truthtable[i + 1];
 					break;
 				}
 				else
 				{
-					cout << inputString[iforLoop].substr(6,3) << " != " << truthtable[i] << endl;
+					//cout << inputString[iforLoop].substr(6,3) << " != " << truthtable[i] << endl;
 				}
 			}
 			tempforLoop++; 
